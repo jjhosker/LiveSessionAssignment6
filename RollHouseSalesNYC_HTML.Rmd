@@ -1,0 +1,331 @@
+---
+title: "Live Assignment #6"
+author: "James Hosker, Brian Kolovich, Ireti Fasere, Adarsh Kannan"
+date: "February 28, 2017"
+output: 
+  html_document:
+  keep_md: true
+## keep markdown doc for github
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# R Markdown Introduction
+
+This is an R Markdown document for Live Assignement #6 for MSDS 6306-402: Doing Data Science at SMU. 
+
+Part of this code was taken from Benjamin Reddy and taken from pages 49-50
+of O'Neil and Schutt
+
+# R Libraries Required
+  • require(gdata)
+  
+  • require(plyr) #Added by Monnie McGee
+  
+  • required(car) # Added by James Hosker 
+
+Install the gdata, plyr and car packages and load in to R.
+  • library(car)
+  • library(plyr)
+  • library(gdata)
+
+```{r}
+library(car)
+library(plyr)
+
+```
+
+# Data Files Required to Load and Basic Format of Data 
+  • Change directory to directory where your uncleaned data file rather than using our directory below.
+  
+  • Again our unlceaned data file is called rollingsales_brooklyn.csv.
+  
+  • We load the uncleaned data skipping over the first four lines of the file, which is commentary information.  The data frame is called "bk".
+  
+  • Our cleaned data file is called CLEANEDrollingsales_brooklyn.csv.  which we will save later in this writeup.
+  
+  • Finally we provide some basic formatting information on the data frame with the head, summary and str functions.
+
+```{r}
+# So, save the file as a csv and use read.csv instead
+bk <- read.csv("C:/Users/JHosker/Documents/Rproj/LiveSessionAssignment6/rollingsales_brooklyn.csv",skip=4,header=TRUE)
+
+## Check the data
+head(bk)
+summary(bk)
+str(bk) # Very handy function!
+```
+
+# Cleaning and Reformatting of Data
+  • First using the "[^[:digit:]]", we are filtering out all characters in each entry that has number (sales.price, gross.square.feet & land.square.feet) and save the digits, we then save the data as numerics and save them as new columns in the "bk" data frame as sales.price.n. gross.sqft, & land.sqft, respectively.
+  
+  •  We change the labels that we will use to lower case.   
+
+  •  Finally to filter the names in the building.class.category, We resave the category names as characters so we can used them later in labeling the data. 
+
+```{r}
+## clean/format the data with regular expressions
+## More on these later. For now, know that the
+## pattern "[^[:digit:]]" refers to members of the variable name that
+## start with digits. We use the gsub command to replace them with a blank space.
+
+## We create a new variable that is a "clean' version of sale.price.
+## And sale.price.n is numeric, not a factor.
+
+## Get rid of leading digits and any letter characters and convert remaining number string to numeric
+bk$SALE.PRICE.N <- as.numeric(gsub("[^[:digit:]]","", bk$SALE.PRICE))
+count(is.na(bk$SALE.PRICE.N))
+
+names(bk) <- tolower(names(bk)) # make all variable names lower case
+## Get rid of leading digits, get rid of characters and convert number string to numeric
+bk$gross.sqft <- as.numeric(gsub("[^[:digit:]]","", bk$gross.square.feet))
+bk$land.sqft <- as.numeric(gsub("[^[:digit:]]","", bk$land.square.feet))
+bk$year.built <- as.numeric(as.character(bk$year.built))
+
+## Change building.class.category to character string from integer
+bk$building.class.category <- as.character(bk$building.class.category)
+
+```
+
+# Filter the Data, Remove NAs and Zeros.  Focus on Family Dwellings
+  • First thing that we do is we create a subset (called "familydwell"") of the data frame "bk" to look at only the one, two and three family dwelling data as a a separte data frame with only five columns: building.class.category","sale.price.n", "gross.sqft","land.sqft" and "year.built".
+  
+  • We then remove (omit) all "NA" data in these three building classifications under "familydwell".
+
+  •  We divide the "sales.price.n" column by 1,000 so we can better display the data around sales without any exponential labels.  We will then label all graphs with sales in $000s.
+
+  • From sale.price.n data, we remove all values < $500.
+
+  • From year built data, we remove all zeros.
+
+  • From gross.sqft and land.sqft, we checked for values less than 100 sqft but found none after we removed the NAs.  
+
+  • We relabel the the three main building categories that have too many spaces and characters below in order to better display them in boxplots, plots, histograms, and q-q plots:
+    - "01  ONE FAMILY DWELLINGS                    " becomes "1 One Dwelling"
+    - "02  TWO FAMILY DWELLINGS                    " becomes "2 Two Dwelling"
+    - "03  THREE FAMILY DWELLINGS                  " becomes "3 Three Dwelling"
+
+  • We save two cleanded data files:
+    - • Cleaned Dataset on data frame bk:  CLEANED_bk_rollsales_brooklyn.csv
+              -  This is the orginal date with the cleaning that we orginally received in the 
+                 code provided in class.  Filtering data using "[^[:digit:]]" and omitting NAs. 
+    - • Cleaned Dateset on data frame familydwell using our code:  CLEANED_familydwelling.csv
+              -  This is the CLEANED_rolingsales_brookly.csv with some additional filters for our analysis. 
+                 We filter out only One, Two and Three Family Dwelling Homes.
+                 Additional cleaning includes removing zeros in year.built, removing sales purchase data 
+                 below $500 and other cleaning documented in the HTML file.
+
+```{r}
+## do a bit of exploration to make sure there's not anything
+## weird going on with sale prices
+attach(bk)
+############################################################
+## Required Information and Comparisons
+############################################################
+building.category <- unique(bk$building.class.category)
+familydwell <- bk[bk$building.class.category == building.category[1] | 
+                    bk$building.class.category == building.category[2] | 
+                    bk$building.class.category == building.category[3],
+                    c("building.class.category","sale.price.n",
+                    "gross.sqft","land.sqft", "year.built")]
+## Remove or Omit NA
+familydwell <- na.omit(familydwell)
+## Divide sales.price.n / 1000
+familydwell$sale.price.n <- familydwell$sale.price.n/1000
+## Remove all sales.price.n < $500
+familydwell <- familydwell[(familydwell$sale.price.n > 0.5),]
+## Remove all years built equal to zero
+familydwell <- familydwell[!(familydwell$year.built==0),]
+
+
+## Change label to shortened name for one, two and three family dwelling
+familydwell$building.class.category[familydwell$building.class.category == 
+                                      building.category[1]] <- "1 One Dwelling"
+familydwell$building.class.category[familydwell$building.class.category == 
+                                      building.category[2]] <- "2 Two Dwelling"
+familydwell$building.class.category[familydwell$building.class.category == 
+                                      building.category[3]] <- "3 Three Dwelling"
+## Write cleanded data frame bk in CSV in R
+write.csv(bk, file = "C:/Users/JHosker/Documents/Rproj/LiveSessionAssignment6/CLEANED_bk_rollsales_brooklyn.csv",row.names=FALSE)
+
+## Write cleanded data frame familydwell in CSV in R
+write.csv(familydwell, file = "C:/Users/JHosker/Documents/Rproj/LiveSessionAssignment6/CLEANED_familydwelling.csv",row.names=FALSE)
+```
+
+# Plots and Interpretation of Data/Plots
+
+## 1. Sales Price for All Family Dwellings
+  • In this first set of plots, we investigate sales price using the following R functions:  "summary" (summary statistics), "boxplot"", "hist" (histogram), and "qqnorm"" (Q-Q Plot using normal distribution).
+
+  • Establish Figure Number variable for numbering of figures.
+  
+## Analysis: BLA BLA BLA
+
+```{r}
+## Summary Statistics for One, Two and Three Family Dwellings Combined
+cat("Summary of Sales Price ($000s) for 1,2 & 3 Family Dwellings")
+summary(familydwell$sale.price.n)
+
+## Sales Price:  Create BoxPlot for One, Two and Three Family Dwellings Combined
+boxplot(familydwell$sale.price.n~familydwell$building.class.category,
+        xlim=c(0,4),ylab="$ Price 000s", 
+        main="Fig.1: Sales Price BoxPlot of One, Two and Three \n Family Dwellings Individually")
+
+## Sales Price:  Create Histogram for One, Two and Three Family Dwellings Combined
+hist(familydwell$sale.price.n, xlab="One to Three Family $ Price in 000s",
+     ylab="Frequency",
+     main="Fig.2: Sales Price Histogram of One, Two and Three \n Family Dwellings Combined")
+
+## Sales Price:  Create Q-Q Plot using a normal distribution for One, Two 
+##   and Three Family Dwellings Combined
+qqnorm(familydwell$sale.price.n, xlab="Sales Price Theoretical Quantiles of One, Two \n and Three Family Dwellings Combined",
+       ylab="Sample Quantiles in $ Price 000s",
+       main="Fig.3: Normal Q-Q Plot of Sales Price for One, \n Two and Three Family Dwellings")
+
+```
+
+## 2. Sales Price vs. Gross Square Feet AND Sales Price vs. Land Square Feet For All Family Dwellings
+  • In this second set of plots, we investigate sales price vs. gross sqft using the "plot"" (scatterplot) command.
+
+  • We use the entire data set and then filter out the outliers > $10 mill in sales price to get a more accurate intrepretation of the distribution.  This removes only four samples.
+
+  • For sales price vs. land square feet, we show the full data and the data filter outliers > 15k square feet, so we can see the distribution of the plot better.  This removes only two samples.
+  
+## Analysis:  We can generally see that the sales prices increases as the gross square footage increases.
+
+```{r}
+## Summary Statistics for One, Two and Three Family Dwellings Combined
+cat("Summary of Sales Price ($000s) for 1,2 & 3 Family Dwellings")
+summary(familydwell$sale.price.n)
+cat("Summary of Gross Sqft for 1,2 & 3 Family Dwellings")
+summary(familydwell$gross.sqft)
+cat("Summary of Land Sqft for 1,2 & 3 Family Dwellings")
+summary(familydwell$land.sqft)
+
+## Graph Sales Price vs. Gross Sqft for One, Two and Three Family Dwellings Combined
+plot(familydwell$sale.price.n,familydwell$gross.sqft,
+     xlab="Sales Price in 000s", ylab = "Gross Sqft",
+     main="Fig.4: Sales Price vs. Gross Sqft for 1 to 3 \n Family Dwellings")
+
+## Graph Sales Price vs. Gross Sqft for One, Two and Three Family Dwellings Combined
+## We filter out outliers above $10 Mill which is four samples: 
+## $11.36, 13.181, 15.0 and 19.875 mill
+count(familydwell$sale.price.n[familydwell$sale.price.n > 10000])
+plot(familydwell$sale.price.n,familydwell$gross.sqft,
+     xlab="Sales Price in 000s", ylab = "Gross Sqft",xlim=c(1,10000),
+     main="Fig.5: Sales Price vs. Gross Sqft for 1 to 3 \n Family Dwelling (< $10Mill for sales price)")
+
+## Graph Sales Price vs. Land Sqft for One, Two and Three Family Dwellings Combined
+plot(familydwell$sale.price.n,familydwell$land.sqft,
+     xlab="Sales Price in 000s", ylab = "Land Sqft", ylim=c(1,15000),
+     main="Fig.6: Sales Price vs. Land Sqft for 1 to 3 \n Family Dwelling")
+
+## Graph Sales Price vs. Land Sqft for One, Two and Three Family Dwellings Combined
+## We filter out outliers above 15k which is two samples: 42.5 and 68.6k samples
+count(familydwell$land.sqft[familydwell$land.sqft > 15000])
+plot(familydwell$sale.price.n,familydwell$land.sqft,
+     xlab="Sales Price in 000s", ylab = "Land Sqft", ylim=c(1,15000),
+     main="Fig.7: Sales Price vs. Land Sqft for 1 to 3 \n Family Dwelling (< 15k land sqft)")
+
+```
+
+## 3.  Sales Price vs. Year Built For All Family Dwellings
+  • In this third set of plots, we investigate sales using the "plot"" (scatterplot) command.
+  
+  • For sales price vs. year built, we set the x-axis to year 1800 to 2015 (the max year in the data frame).  This removes no samples.
+
+## Analysis:  BLA BLA BLA.
+
+```{r}
+## Summary Statistics for One, Two and Three Family Dwellings Combined
+cat("Summary of Year Built for 1,2 & 3 Family Dwellings")
+summary(familydwell$year.built)
+
+## Individual Graph Sales Price vs. Year Built for One, Two and Three Family Dwellings Combined
+plot(familydwell$year.built,familydwell$sale.price.n, xlab = "Year Built", 
+     ylab="Sales Price in 000s",xlim=c(1800,2017),
+     main="Fig.8: Year Built vs. Sales Price for 1 to 3 \n Family Dwelling")
+
+```
+
+## 4.  Year Built, Gross Square Feet Land Square Feet For All Family Dwellings
+  • In this fourth set of plots, we investigate these elements using the "boxplot"" and "hist" (histogram) commands.
+  • For gross and land square feet we fitler out outliers greater than 15K, which eliminates only one sample for gross square footage and two from land square footage.
+  
+## Analysis:  BLA BLA BLA.
+
+```{r}
+## Summary Statistics for One, Two and Three Family Dwellings Combined
+cat("Summary of Year Built for 1,2 & 3 Family Dwellings")
+summary(familydwell$year.built)
+cat("Summary of Gross Sqft for 1,2 & 3 Family Dwellings")
+summary(familydwell$gross.sqft)
+cat("Summary of Land Sqft for 1,2 & 3 Family Dwellings")
+summary(familydwell$land.sqft)
+
+## Year Built:  Create BoxPlot for One, Two and Three Family Dwellings Combined
+boxplot(familydwell$year.built~familydwell$building.class.category,
+        xlim=c(0,4),ylab="Year Built", ylim=c(1800,2017),
+        main="Fig.9: Year Built BoxPlot of One, Two and Three \n Family Dwellings Individually")
+
+## Gross Sqft:  Create BoxPlot for One, Two and Three Family Dwellings Combined
+## We filter out outliers above 15k which is two samples:  20.457k sample
+count(familydwell$gross.sqft[familydwell$gross.sqft > 15000])
+boxplot(familydwell$gross.sqft~familydwell$building.class.category,
+        xlim=c(0,4),ylab="Gross Sqft", ylim=c(1,15000),
+        main="Fig.10: Gross Sqft BoxPlot of One, Two and Three Family \n Dwellings Individually (< 15K Gross Sqft)")
+
+hist(as.numeric(familydwell$gross.sqft), xlim=c(1,15000), 
+  xlab="Gross Sqft for One to Three Family Dwell", ylab="Frequency",
+  main="Fig.11: Histogram of Gross Sqft for One, Two and Three \n Family Dwellings Combined (< 15K Gross Sqft)")
+
+## Land Sqft:  Create BoxPlot for One, Two and Three Family Dwellings Combined
+## We filter out outliers above 15k which is two samples: 42.5 and 68.6k samples
+count(familydwell$land.sqft[familydwell$land.sqft > 15000])
+boxplot(familydwell$land.sqft~familydwell$building.class.category,
+        xlim=c(0,4),ylab="Land Sqft", ylim=c(1,15000),
+        main="Fig.12: Land Sqft BoxPlot of One, Two and Three \n Family Dwellings (< 15K Land Sqft)")
+
+hist(as.numeric(familydwell$land.sqft), xlim=c(1,15000), 
+     xlab="Land Sqft for One to Three Family Dwell", ylab="Frequency",
+     main="Fig.13: Histogram of Land Sqft for One, Two and Three \n Family Dwellings Combined (< 15K Land Sqft)")
+
+```
+
+## 5.  Sales Price for Each Individual Dwelling (One, Two, Three)
+  • In this fifth set of plots, we investigate these elements with the "hist" (histogram) and "qqnorm" (q-q plot) command of only sales price data for each individual category of family dwellings.
+  
+  • We could also do the same for other variables but stop here.  Other variables are gross square feet; year built; and land per square feet.
+
+```{r}
+#############################################################################
+## Create Same Information for each individual Family Group for sales.price.n
+#############################################################################
+
+## Create Historgrams of Each Family Dwelling Individually
+hist(familydwell$sale.price.n[familydwell$building.class.category == "1 One Dwelling"], 
+     xlab=" $ Price in 000s", ylab="Frequency", main="Fig.14: Sales Price Histogram of One Family Dwellings")
+hist(familydwell$sale.price.n[familydwell$building.class.category == "2 Two Dwelling"], 
+     xlab=" $ Price in 000s", ylab="Frequency", main="Fig.15: Sales Price Histogram of Two Family Dwellings")
+hist(familydwell$sale.price.n[familydwell$building.class.category == "3 Three Dwelling"], 
+     xlab=" $ Price in 000s", ylab="Frequency", main="Fig.16: Sales Price Histogram of Three Family Dwellings")
+
+## Create Q-Q Plot for One, Two and Three Family Dwellings Individually
+qqnorm(familydwell$sale.price.n[familydwell$building.class.category == "1 One Dwelling"], 
+       xlab="Sales Price Theoretical Quantiles of One Family Dwellings", 
+       ylab="Sample Quantiles in $ Price 000s",
+       main="Fig.17: Normal Q-Q Plot of Sales Price for One Family Dwellings")
+qqnorm(familydwell$sale.price.n[familydwell$building.class.category == "2 Two Dwelling"], 
+       xlab="Sales Price Theoretical Quantiles of Two Family Dwellings", 
+       ylab="Sample Quantiles in $ Price 000s",
+       main="Fig.18: Normal Q-Q Plot of Sales Price for Two Family Dwellings")
+qqnorm(familydwell$sale.price.n[familydwell$building.class.category == "3 Three Dwelling"], 
+       xlab="Sales Price Theoretical Quantiles of Three Family Dwellings", 
+       ylab="Sample Quantiles in $ Price 000s", 
+       main="Fig.19: Normal Q-Q Plot of Sales Price for Three Family Dwellings")
+```
+
+
+# This ends the HTML file for Live Assignment #6
