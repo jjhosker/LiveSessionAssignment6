@@ -1,0 +1,103 @@
+---
+title: "Live Assignment #6:  Sales Price vs. Gross Or Land Sqft"
+author: "James Hosker, Brian Kolovich, Ireti Fasere, Adarsh Kannan"
+date: "February 28, 2017"
+output: 
+  html_document:
+  keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# R Markdown Introduction
+
+This is an R Markdown document for Live Assignement #6 for MSDS 6306-402: Doing Data Science at SMU. 
+
+This code loads the CLEANED_familydwelling.csv, which is the cleaned data and graphs sales price vs. gross sqft and sales price vs. land sqft. 
+
+# R Libraries Required
+  • require(gdata)
+  
+  • require(plyr) #Added by Monnie McGee
+  
+  • required(car) # Added by James Hosker 
+
+Install the gdata, plyr and car packages and load in to R.
+  • library(car)
+  • library(plyr)
+  • library(gdata)
+
+```{r}
+library(car)
+library(plyr)
+## library(gdata)
+
+```
+
+# Data Files Required to Load and Basic Format of Data 
+  • Here we load the filtered data on one, two and three family dwellings.
+
+  • For more information on how the data was filtered see the document RollHousSalesNYC_HTML.html in this repository.
+  
+```{r}
+# So, save the file as a csv and use read.csv instead
+familydwell <- read.csv("C:/Users/JHosker/Documents/Rproj/LiveSessionAssignment6/CLEANED_familydwelling.csv",header=TRUE)
+
+```
+
+## Sales Price vs. Gross Square Feet AND Sales Price vs. Land Square Feet For All Family Dwellings
+  • In this set of plots, we investigate sales price vs. gross sqft using the "plot"" (scatterplot) command.
+
+  • We use the entire data set and then filter out the outliers > 10k in gross sqft to get a more accurate intrepretation of the distribution.  This removes only two samples.
+
+  • For sales price vs. land square feet, we show the full data and the data filter outliers > 15k square feet, so we can see the distribution of the plot better.  This removes only two samples.
+  
+# Analysis:  
+
+## 1. We can generally see that the sales prices increases as the gross square footage increases.  The same is true for sales price vs. land square footage.   
+
+## 2. Sales Price goes form $1K to $19.88 Mill with median of $750k and mean of $929.1k.  The Q1 (25%) to Q3 (75%) distribuiton iss from $495K to $1,125k.
+
+## 3. Gross sqft has a min of 324 sqft and a mximum of 20.64k sqft.  The mean is 2201 sqft and the median is 2080 sqft.  The Q1 (25%) to Q3 (75%) distribuiton is from 1540 to 2700 sqft.
+
+## 4. Land sqft has a min of 250 sqft and a mximum of 63.6k sqft.  The mean is 2338 sqft and the median is 2000 sqft.  The Q1 (25%) to Q3 (75%) distribuiton is from 1800 to 2500 sqft.
+
+```{r}
+## Summary Statistics for One, Two and Three Family Dwellings Combined
+cat("Summary of Sales Price ($000s) for 1,2 & 3 Family Dwellings")
+summary(familydwell$sale.price.n)
+cat("Summary of Gross Sqft for 1,2 & 3 Family Dwellings")
+summary(familydwell$gross.sqft)
+cat("Summary of Land Sqft for 1,2 & 3 Family Dwellings")
+summary(familydwell$land.sqft)
+
+## Graph Sales Price vs. Gross Sqft for One, Two and Three Family Dwellings Combined
+plot(familydwell$sale.price.n,familydwell$gross.sqft,
+     xlab="Sales Price in 000s", ylab = "Gross Sqft",
+     main="Fig.1: Sales Price vs. Gross Sqft for 1 to 3 \n Family Dwellings")
+
+## Graph Sales Price vs. Gross Sqft for One, Two and Three Family Dwellings Combined
+## We filter out outliers above 10K gross sqft which is two samples: 
+## 10.424k and 20.457k gross sqft
+count(familydwell$gross.sqft[familydwell$gross.sqft > 10000])
+plot(familydwell$sale.price.n,familydwell$gross.sqft,
+     xlab="Sales Price in 000s", ylab = "Gross Sqft",ylim=c(1,10000),
+     main="Fig.2: Sales Price vs. Gross Sqft for 1 to 3 \n Family Dwelling (< 10K gross sqft)")
+
+## Graph Sales Price vs. Land Sqft for One, Two and Three Family Dwellings Combined
+plot(familydwell$sale.price.n,familydwell$land.sqft,
+     xlab="Sales Price in 000s", ylab = "Land Sqft",
+     main="Fig.3: Sales Price vs. Land Sqft for 1 to 3 \n Family Dwelling")
+
+## Graph Sales Price vs. Land Sqft for One, Two and Three Family Dwellings Combined
+## We filter out outliers above 15k which is two samples: 42.5 and 68.6k samples
+count(familydwell$land.sqft[familydwell$land.sqft > 15000])
+plot(familydwell$sale.price.n,familydwell$land.sqft,
+     xlab="Sales Price in 000s", ylab = "Land Sqft", ylim=c(1,15000),
+     main="Fig.4: Sales Price vs. Land Sqft for 1 to 3 \n Family Dwelling (< 15k land sqft)")
+
+```
+
+# This ends the HTML file for Live Assignment #6 for looking at Sales Data vs. Gross and Land Sqft.

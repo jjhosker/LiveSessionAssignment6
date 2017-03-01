@@ -34,7 +34,7 @@ Install the gdata, plyr and car packages and load in to R.
 ```{r}
 library(car)
 library(plyr)
-
+## library(gdata)
 ```
 
 # Data Files Required to Load and Basic Format of Data 
@@ -189,11 +189,19 @@ qqnorm(familydwell$sale.price.n, xlab="Sales Price Theoretical Quantiles of One,
 ## 2. Sales Price vs. Gross Square Feet AND Sales Price vs. Land Square Feet For All Family Dwellings
   • In this second set of plots, we investigate sales price vs. gross sqft using the "plot"" (scatterplot) command.
 
-  • We use the entire data set and then filter out the outliers > $10 mill in sales price to get a more accurate intrepretation of the distribution.  This removes only four samples.
+  • We use the entire data set and then filter out the outliers > 10k in gross sqft to get a more accurate intrepretation of the distribution.  This removes only two samples.
 
-  • For sales price vs. land square feet, we show the full data and the data filter outliers > 15k square feet, so we can see the distribution of the plot better.  This removes only two samples.
+  • For sales price vs. land square feet, we show the full data and the data filter outliers > 15k square feet, so we can see the distribution of the plot better.  This removes only one sample.
   
-## Analysis:  We can generally see that the sales prices increases as the gross square footage increases.
+# Analysis:  
+
+## 1. We can generally see that the sales prices increases as the gross square footage increases.  The same is true for sales price vs. land square footage.   
+
+## 2. Sales Price goes form $1K to $19.88 Mill with median of $750k and mean of $929.1k.  The Q1 (25%) to Q3 (75%) distribuiton iss from $495K to $1,125k.
+
+## 3. Gross sqft has a min of 324 sqft and a mximum of 20.64k sqft.  The mean is 2201 sqft and the median is 2080 sqft.  The Q1 (25%) to Q3 (75%) distribuiton is from 1540 to 2700 sqft.
+
+## 4. Land sqft has a min of 250 sqft and a mximum of 63.6k sqft.  The mean is 2338 sqft and the median is 2000 sqft.  The Q1 (25%) to Q3 (75%) distribuiton is from 1800 to 2500 sqft.
 
 ```{r}
 ## Summary Statistics for One, Two and Three Family Dwellings Combined
@@ -210,16 +218,16 @@ plot(familydwell$sale.price.n,familydwell$gross.sqft,
      main="Fig.4: Sales Price vs. Gross Sqft for 1 to 3 \n Family Dwellings")
 
 ## Graph Sales Price vs. Gross Sqft for One, Two and Three Family Dwellings Combined
-## We filter out outliers above $10 Mill which is four samples: 
-## $11.36, 13.181, 15.0 and 19.875 mill
-count(familydwell$sale.price.n[familydwell$sale.price.n > 10000])
+## We filter out outliers above 10K gross sqft which is two samples: 
+## 10.424k and 20.457k gross sqft
+count(familydwell$gross.sqft[familydwell$gross.sqft > 10000])
 plot(familydwell$sale.price.n,familydwell$gross.sqft,
-     xlab="Sales Price in 000s", ylab = "Gross Sqft",xlim=c(1,10000),
-     main="Fig.5: Sales Price vs. Gross Sqft for 1 to 3 \n Family Dwelling (< $10Mill for sales price)")
+     xlab="Sales Price in 000s", ylab = "Gross Sqft",ylim=c(1,10000),
+     main="Fig.5: Sales Price vs. Gross Sqft for 1 to 3 \n Family Dwelling (< 10K gross sqft)")
 
 ## Graph Sales Price vs. Land Sqft for One, Two and Three Family Dwellings Combined
 plot(familydwell$sale.price.n,familydwell$land.sqft,
-     xlab="Sales Price in 000s", ylab = "Land Sqft", ylim=c(1,15000),
+     xlab="Sales Price in 000s", ylab = "Land Sqft",
      main="Fig.6: Sales Price vs. Land Sqft for 1 to 3 \n Family Dwelling")
 
 ## Graph Sales Price vs. Land Sqft for One, Two and Three Family Dwellings Combined
