@@ -32,7 +32,7 @@ Install the gdata, plyr and car packages and load in to R.
 ```{r}
 library(car)
 library(plyr)
-## library(gdata)
+library(gdata)
 
 ```
 
