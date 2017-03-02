@@ -17,12 +17,12 @@ In this repository, we analyze the data set rollingsales_brooklyncleaned.csv.
 ##       • Cleaned Dateset on data frame familydwell using our code:  CLEANED_familydwelling.csv.  This is the CLEANED_rolingsales_brookly.csv with some additional filters for our analysis.  We filter out only One, Two and Three Family Dwelling Homes.  Additional cleaning includes removing zeros in year.built, removing sales purchase data below $500 and other cleaning documented in the HTML file.
     
 ## 3.  An analysis directory containing a file (or files) for exploratory data analysis on the clean data to visualize the relationship between gross or land square footage and sales price.
-##       • File names:  SalesPrice_vs_GrossOrLandSqft_HTML.html, SalesPrice_vs_GrossOrLandSqft_HTML.cmd
+##       • File names:  SalesPriceVsGrossLandsqft.html, SalesPriceVsGrossLandsqft.Rmd
 
 ## 4.  A paper directory containing a HTML file (plain text or Markdown) that explains any meaningful patterns in this dataset.
-##       • File name:  RollHouseSales_NYC_HTML.html, RollHouseSales_NYC_HTML.cmd
+##       • File name:  RollHouseSales_NYC_HTML.html, RollHouseSales_NYC_HTML.Rmd
 
 ## 5. Deliverable: A link to a repository (test-repo is fine) on GitHub containing the above.  Need only one link per group. The repostiory should be able to be shared with others
-##       • Link:
+##       • Link:  https://github.com/jjhosker/LiveSessionAssignment6
 
 ## © 2017 SMU for GitHub, Inc. SMU Security Terms. 
