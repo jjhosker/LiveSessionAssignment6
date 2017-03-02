@@ -54,7 +54,7 @@ familydwell <- read.csv("C:/Users/JHosker/Documents/Rproj/LiveSessionAssignment6
 
   • For sales price vs. land square feet, we show the full data and the data filter outliers > 15k square feet, so we can see the distribution of the plot better.  This removes only two samples.
   
-# Analysis:  
+# ANALYSIS:  
 
 ## Fig.1 and Fig.2: We can generally see that the sales prices increases as the gross square footage increases.  
   • Overall, the vast majority of the units being sold are around the less than 3,000 square feet range and the less than 5M sales price. There is some evidence of a linear trend although clustered.

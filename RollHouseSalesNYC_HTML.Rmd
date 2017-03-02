@@ -12,7 +12,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# R Markdown Introduction
+# R Markdown Introduction 
 
 This is an R Markdown document for Live Assignement #6 for MSDS 6306-402: Doing Data Science at SMU. 
 
