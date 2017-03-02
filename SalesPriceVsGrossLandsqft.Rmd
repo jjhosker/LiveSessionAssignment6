@@ -56,13 +56,17 @@ familydwell <- read.csv("C:/Users/JHosker/Documents/Rproj/LiveSessionAssignment6
   
 # Analysis:  
 
-## 1. We can generally see that the sales prices increases as the gross square footage increases.  The same is true for sales price vs. land square footage.   
+## Fig.1 and Fig.2: We can generally see that the sales prices increases as the gross square footage increases.  
+  • Overall, the vast majority of the units being sold are around the less than 3,000 square feet range and the less than 5M sales price. There is some evidence of a linear trend although clustered.
 
-## 2. Sales Price goes form $1K to $19.88 Mill with median of $750k and mean of $929.1k.  The Q1 (25%) to Q3 (75%) distribuiton iss from $495K to $1,125k.
+  •  Sales Price goes form 1K to 19.88 Mill with median of 750k and mean of 929.1k.  The Q1 (25%) to Q3 (75%) distribuiton iss from 495K to 1,125k.
 
-## 3. Gross sqft has a min of 324 sqft and a mximum of 20.64k sqft.  The mean is 2201 sqft and the median is 2080 sqft.  The Q1 (25%) to Q3 (75%) distribuiton is from 1540 to 2700 sqft.
+  • Gross sqft has a min of 324 sqft and a mximum of 20.64k sqft.  The mean is 2201 sqft and the median is 2080 sqft.  The Q1 (25%) to Q3 (75%) distribuiton is from 1540 to 2700 sqft.
+  
+## Fig.3 and Fig.4: We see sales price vs. land square footage. 
+  • Overall, the vast majority of the units being sold are around the less than 5,000 square feet range and the less than 5M sales price. There is no clear evidence of a linear trend between an increase in sales price to an increase in square footage. There are several outliers associated with increased square footage, in which you see units with more than 5,000 square feet being sold for well under 5M. On the other hand, we see limited sales for units with less than 5,000 square feet being sold at a premium (e.g. over 10M).
 
-## 4. Land sqft has a min of 250 sqft and a mximum of 63.6k sqft.  The mean is 2338 sqft and the median is 2000 sqft.  The Q1 (25%) to Q3 (75%) distribuiton is from 1800 to 2500 sqft.
+  • Land sqft has a min of 250 sqft and a mximum of 63.6k sqft.  The mean is 2338 sqft and the median is 2000 sqft.  The Q1 (25%) to Q3 (75%) distribuiton is from 1800 to 2500 sqft.
 
 ```{r}
 ## Summary Statistics for One, Two and Three Family Dwellings Combined

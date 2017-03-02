@@ -377,8 +377,19 @@ write.csv(familydwell, file = &quot;C:/Users/JHosker/Documents/Rproj/LiveSession
 <p>• In this first set of plots, we investigate sales price using the following R functions: “summary” (summary statistics), “boxplot”“,”hist&quot; (histogram), and “qqnorm”&quot; (Q-Q Plot using normal distribution).</p>
 <p>• Establish Figure Number variable for numbering of figures.</p>
 </div>
-<div id="analysis-bla-bla-bla" class="section level2">
-<h2>Analysis: BLA BLA BLA</h2>
+<div id="analysis" class="section level2">
+<h2>ANALYSIS:</h2>
+</div>
+<div id="fig.1-this-boxplot-shows-the-prices-1-family-2-family-and-3-family-homes-for-those-built-in-the-1900s." class="section level2">
+<h2>Fig.1: This boxplot shows the prices 1-family, 2-family, and 3-family homes for those built in the 1900s.</h2>
+<p>• The scale is in the 1000’s to better indicate the distribution of prices. All three boxplots plots are similar with similar five-number summaries, but the 3-family homes show very clear outliers that are not present in the other two groups. Based on this data, the 3-family homes show more variance than the other two groups, but that is partially in due to the higher prices.</p>
+</div>
+<div id="fig.2-this-histogram-shows-the-frequency-of-all-homes-and-their-price-ranges." class="section level2">
+<h2>Fig.2: This histogram shows the frequency of all homes and their price ranges.</h2>
+<p>• This histogram shows a strong right skew. There isn’t much of a tail for this histogram, but that is because most of the data points are in the same area, price-wise.</p>
+</div>
+<div id="fig.3-this-q-q-plot-better-shows-the-distribution-of-the-prices-of-all-the-homes.-this-reiterates-what-the-previous-two-figures-showed." class="section level2">
+<h2>Fig.3: This Q-Q plot better shows the distribution of the prices of all the homes. This reiterates what the previous two figures showed.</h2>
 <pre class="r"><code>## Summary Statistics for One, Two and Three Family Dwellings Combined
 cat(&quot;Summary of Sales Price ($000s) for 1,2 &amp; 3 Family Dwellings&quot;)</code></pre>
 <pre><code>## Summary of Sales Price ($000s) for 1,2 &amp; 3 Family Dwellings</code></pre>
@@ -408,20 +419,19 @@ qqnorm(familydwell$sale.price.n, xlab=&quot;Sales Price Theoretical Quantiles of
 <p>• We use the entire data set and then filter out the outliers &gt; 10k in gross sqft to get a more accurate intrepretation of the distribution. This removes only two samples.</p>
 <p>• For sales price vs. land square feet, we show the full data and the data filter outliers &gt; 15k square feet, so we can see the distribution of the plot better. This removes only one sample.</p>
 </div>
+<div id="analysis-1" class="section level2">
+<h2>ANALYSIS:</h2>
 </div>
-<div id="analysis" class="section level1">
-<h1>Analysis:</h1>
-<div id="we-can-generally-see-that-the-sales-prices-increases-as-the-gross-square-footage-increases.-the-same-is-true-for-sales-price-vs.land-square-footage." class="section level2">
-<h2>1. We can generally see that the sales prices increases as the gross square footage increases. The same is true for sales price vs. land square footage.</h2>
+<div id="fig.4-and-fig.5-we-can-generally-see-that-the-sales-prices-increases-as-the-gross-square-footage-increases." class="section level2">
+<h2>Fig.4 and Fig.5: We can generally see that the sales prices increases as the gross square footage increases.</h2>
+<p>• Overall, the vast majority of the units being sold are around the less than 3,000 square feet range and the less than 5M sales price. There is some evidence of a linear trend although clustered.</p>
+<p>• Sales Price goes form 1K to 19.88 Mill with median of 750k and mean of 929.1k. The Q1 (25%) to Q3 (75%) distribuiton iss from 495K to 1,125k.</p>
+<p>• Gross sqft has a min of 324 sqft and a mximum of 20.64k sqft. The mean is 2201 sqft and the median is 2080 sqft. The Q1 (25%) to Q3 (75%) distribuiton is from 1540 to 2700 sqft.</p>
 </div>
-<div id="sales-price-goes-form-1k-to-19.88-mill-with-median-of-750k-and-mean-of-929.1k.-the-q1-25-to-q3-75-distribuiton-iss-from-495k-to-1125k." class="section level2">
-<h2>2. Sales Price goes form $1K to $19.88 Mill with median of $750k and mean of $929.1k. The Q1 (25%) to Q3 (75%) distribuiton iss from $495K to $1,125k.</h2>
-</div>
-<div id="gross-sqft-has-a-min-of-324-sqft-and-a-mximum-of-20.64k-sqft.-the-mean-is-2201-sqft-and-the-median-is-2080-sqft.-the-q1-25-to-q3-75-distribuiton-is-from-1540-to-2700-sqft." class="section level2">
-<h2>3. Gross sqft has a min of 324 sqft and a mximum of 20.64k sqft. The mean is 2201 sqft and the median is 2080 sqft. The Q1 (25%) to Q3 (75%) distribuiton is from 1540 to 2700 sqft.</h2>
-</div>
-<div id="land-sqft-has-a-min-of-250-sqft-and-a-mximum-of-63.6k-sqft.-the-mean-is-2338-sqft-and-the-median-is-2000-sqft.-the-q1-25-to-q3-75-distribuiton-is-from-1800-to-2500-sqft." class="section level2">
-<h2>4. Land sqft has a min of 250 sqft and a mximum of 63.6k sqft. The mean is 2338 sqft and the median is 2000 sqft. The Q1 (25%) to Q3 (75%) distribuiton is from 1800 to 2500 sqft.</h2>
+<div id="fig.6-and-fig.7-we-see-sales-price-vs.land-square-footage." class="section level2">
+<h2>Fig.6 and Fig.7: We see sales price vs. land square footage.</h2>
+<p>• Overall, the vast majority of the units being sold are around the less than 5,000 square feet range and the less than 5M sales price. There is no clear evidence of a linear trend between an increase in sales price to an increase in square footage. There are several outliers associated with increased square footage, in which you see units with more than 5,000 square feet being sold for well under 5M. On the other hand, we see limited sales for units with less than 5,000 square feet being sold at a premium (e.g. over 10M).</p>
+<p>• Land sqft has a min of 250 sqft and a mximum of 63.6k sqft. The mean is 2338 sqft and the median is 2000 sqft. The Q1 (25%) to Q3 (75%) distribuiton is from 1800 to 2500 sqft.</p>
 <pre class="r"><code>## Summary Statistics for One, Two and Three Family Dwellings Combined
 cat(&quot;Summary of Sales Price ($000s) for 1,2 &amp; 3 Family Dwellings&quot;)</code></pre>
 <pre><code>## Summary of Sales Price ($000s) for 1,2 &amp; 3 Family Dwellings</code></pre>
@@ -475,8 +485,15 @@ count(familydwell$land.sqft[familydwell$land.sqft &gt; 15000])</code></pre>
 <p>• In this third set of plots, we investigate sales using the “plot”&quot; (scatterplot) command.</p>
 <p>• For sales price vs. year built, we set the x-axis to year 1800 to 2015 (the max year in the data frame). This removes no samples.</p>
 </div>
-<div id="analysis-bla-bla-bla." class="section level2">
-<h2>Analysis: BLA BLA BLA.</h2>
+<div id="analysis-2" class="section level2">
+<h2>ANALYSIS:</h2>
+</div>
+<div id="fig.8-year-built-vs.sales-price" class="section level2">
+<h2>Fig.8: Year Built vs. Sales Price</h2>
+<p>• For the homes built in the 19th century, the data is scarce in terms of the number of observations, and there are no clear trends to speak of, outside of the fact that the majority of the units were sold for under $5M.</p>
+<p>• There is a proliferation of the data for homes built in the 20th century. For homes built between 1900 and the early to mid-1930s, the sales price increases along with the number of units being sold. Numerous units are selling for over $5M and a few for over $10M. A significant number of units were sold for homes built in the 1925-1935 era.</p>
+<p>• For homes built in the 1940s through the 1970s, the sales price starts to decline and the number of units being sold remains steady throughout this time period.</p>
+<p>• For homes built in the 1980s onward, we see a noticeable uptick in the number of units being sold and the sales price, the latter being particularly evident for homes built in the last 5-10 years.</p>
 <pre class="r"><code>## Summary Statistics for One, Two and Three Family Dwellings Combined
 cat(&quot;Summary of Year Built for 1,2 &amp; 3 Family Dwellings&quot;)</code></pre>
 <pre><code>## Summary of Year Built for 1,2 &amp; 3 Family Dwellings</code></pre>
@@ -493,8 +510,34 @@ plot(familydwell$year.built,familydwell$sale.price.n, xlab = &quot;Year Built&qu
 <h2>4. Year Built, Gross Square Feet Land Square Feet For All Family Dwellings</h2>
 <p>• In this fourth set of plots, we investigate these elements using the “boxplot”&quot; and “hist” (histogram) commands. • For gross and land square feet we fitler out outliers greater than 15K, which eliminates only one sample for gross square footage and two from land square footage.</p>
 </div>
-<div id="analysis-bla-bla-bla.-1" class="section level2">
-<h2>Analysis: BLA BLA BLA.</h2>
+<div id="analysis-3" class="section level2">
+<h2>ANALYSIS:</h2>
+</div>
+<div id="fig.9-here-we-have-year-built-of-the-one-two-and-three-family-dwellings-representing-individual-differences-between-distributions." class="section level2">
+<h2>Fig.9: Here we have year built of the one, two and three family dwellings representing individual differences between distributions.</h2>
+<p>• One Family Dwelling: The first boxplot from fig 9 shows the one- family dwelling with minimum houses that were built in 1900. The bottom 25% of the houses were built in 1920. The horizontal line indicates that 50% of the houses were built around 1925(median). On the average, houses were built in 1925 which also indicate the mean year of houses built. Same mean and median would also indicate a no skew. Top 25% of the houses built in 1930 and maximum houses built in 1940 and above, excluding outliers. The outliers indicate 3 or more houses built below the minimum and more outliers houses built above the maximum.</p>
+<p>• Two Family Dwelling: The second boxplot from fig 9 shows the two-family dwelling and minimum houses that were built around 1875. The bottom 25% of the houses were built in 1900. The horizontal line indicates that 50% of the houses were built around 1920 (median). On the average, more houses were built above 1920 which is above the median. A larger mean than median would also indicate a positive skew. Top 25% of the houses were built in 1930 and maximum houses built in 1975 and above, excluding outliers. The outliers indicate 1 house built below the minimum (1800) and more outliers houses built above the maximum.</p>
+<p>• Three Family Dwelling The third boxplot from fig 9 shows the three-family dwelling and minimum houses that were built in 1885. The bottom 25% of the houses were built in 1895. The horizontal line indicates that 50% of the houses were built around 1915 (median). On the average, more houses were built above 1915 which is above the median. A larger mean than median would also indicate a positive skew. Top 25% of the houses built in 1940 and maximum houses built in 1995 and above, excluding outliers. The outliers indicate 1 house built below the minimum (1800) and more outliers houses built above the maximum.</p>
+</div>
+<div id="fig.10-here-we-have-less-than-15000-gross-square-feet-of-the-one-two-and-three-family-dwellings-representing-individual-differences-between-distributions." class="section level2">
+<h2>Fig.10: Here we have less than 15,000 gross square feet of the one, two and three family dwellings representing individual differences between distributions.</h2>
+<p>• One Family Dwelling: The first boxplot from fig 10 shows the one- family dwelling with minimum houses that have &lt;1000 gross sqft for a one-family dwelling. The bottom 25% of the houses have gross square feet of 1500 gross sqft. The horizontal line indicates that 50% of the houses have a gross square foot of 2000 gross sqft. Same mean and median would indicate a no skew. Top 25% of the gross square feet of the houses were 2500 gross sqft and maximum gross square feet of the houses were 3000sqft, excluding outliers. The outliers indicate maximum gross square feet of outliers’ houses above 3000 gross sqft and between 10,000 gross sqft.</p>
+<p>• Two Family Dwelling: The second boxplot from fig 10 shows the two- family dwelling and minimum houses that have 1000 gross sqft for a two-family dwelling. The bottom 25% of the houses have gross square feet of 2250 gross sqft. The horizontal line indicates that 50% of the houses have a gross square foot of 2500 gross sqft. Same mean and median would also indicate a no skew. Top 25% of the gross square feet of the houses were 2700 gross sqft and maximum gross square feet of the houses were 3750 gross sqft, excluding outliers. The outliers indicate maximum gross square feet of outliers’ houses above 3750 gross sqft and between and above 10,000 gross sqft.</p>
+<p>• Three Family Dwelling: The third boxplot from fig 10 shows the three- family dwelling with minimum houses that have 1500 gross sqft for a three-family dwelling. The bottom 25% of the houses have gross square feet of 2550 gross sqft. The horizontal line indicates that 50% of the houses have a gross square foot of 2750 gross sqft. Same mean and median would also indicate a no skew. Top 25% of the gross square feet of the houses were 3000 gross sqft and maximum gross square feet of the houses were 4500 gross sqft, excluding outliers. The outliers indicate maximum gross square feet of outliers’ houses above 4500 gross sqft and between 10,000 gross sqft and one outlier below 1500 gross sqft.</p>
+</div>
+<div id="in-fig-11-the-histogram-graph-gives-a-quick-visual-summary-of-the-data." class="section level2">
+<h2>In fig 11, the Histogram graph gives a quick visual summary of the data.</h2>
+<p>• It is easy to see that the average frequency is around 2500 gross sqft, with less houses below 2500 gross sqft, and a few as large as 5000 gross sqft, with very low frequency for 7500 gross sqft. The frequency distribution tells us a lot about probability. The shape of this distribution, is right skewed histogram. This data is not a true representative of the population, therefore applies to only this study.</p>
+</div>
+<div id="fig.12-here-we-have-less-than-15000-land-square-feet-of-the-one-two-and-three-family-dwellings-representing-individual-differences-between-distributions." class="section level2">
+<h2>Fig.12: Here we have less than 15,000 land square feet of the one, two and three family dwellings representing individual differences between distributions.</h2>
+<p>• One Family Dwelling: The first boxplot from fig 12 shows the one- family dwelling and minimum land that have &lt;1000 land sqft for a one-family dwelling. The bottom 25% of the land have square feet of 2000 land sqft. The horizontal line indicates that 50% of the land have a land square foot above 2500 land sqft. A larger mean than median would also indicate a positive skew. Top 25% of the land square feet of the land were 3000 land sqft and maximum land square feet of the land were 4500 land sqft, excluding outliers. The outliers indicate maximum land square feet of outliers’ houses above 4500 land sqft and between 14,750 sqft. With one outliers below 1000 sqft</p>
+<p>• Two Family Dwelling: The second boxplot from fig 12 shows the two- family dwelling and minimum land that have 1000 land sqft for a two-family dwelling. The bottom 25% of the land have square feet of 2000sqft. The horizontal line indicates that 50% of the land have a land square foot above 2500 land sqft. A larger mean than median would also indicate a positive skew. Top 25% of the land square feet of the land were 2750 sqft and maximum land square feet of the land were 3750sqft, excluding outliers. The outliers indicate maximum land square feet of outliers’ houses above 3750 land sqft and 10,000 sqft. With few outliers at 1000sqft</p>
+<p>• Three Family Dwelling: The third boxplot from fig 12 shows the three- family dwelling and minimum land that have 1500 land sqft for a three-family dwelling. The bottom 25% of the land have square feet of 2200sqft. The horizontal line indicates that 50% of the land have a land square foot of 2500 land sqft. A larger mean than median would also indicate a positive skew. Top 25% of the land square feet of the land were 2750 sqft and maximum land square feet of the land were 3750sqft, excluding outliers. The outliers indicate maximum land square feet of outliers’ houses above 3750 land sqft and between 12,500 sqft. With few outliers above 1500sqft and below 1500sqft.</p>
+</div>
+<div id="in-fig-13-the-histogram-graph-gives-a-quick-visual-summary-of-the-data." class="section level2">
+<h2>In fig 13, the Histogram graph gives a quick visual summary of the data.</h2>
+<p>• It is easy to see that the average combined frequency is around 2500 and 5000 land sqft, with less land around 7500sqft which is below 10000 land sqft. The frequency distribution tells us a lot about probability. The shape of this distribution, is right skewed histogram. This data is not a true representative of the population, therefore applies to only this study.</p>
 <pre class="r"><code>## Summary Statistics for One, Two and Three Family Dwellings Combined
 cat(&quot;Summary of Year Built for 1,2 &amp; 3 Family Dwellings&quot;)</code></pre>
 <pre><code>## Summary of Year Built for 1,2 &amp; 3 Family Dwellings</code></pre>
